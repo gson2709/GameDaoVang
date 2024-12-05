@@ -1,9 +1,8 @@
 package com.example.thuctapxuong.restController;
 
-import com.example.thuctapxuong.dao.AchievementDao;
-import com.example.thuctapxuong.dao.PlayerInfoDao;
-import com.example.thuctapxuong.dao.UserDao;
+import com.example.thuctapxuong.dao.*;
 import com.example.thuctapxuong.entity.Achievement;
+import com.example.thuctapxuong.entity.BoughtChar;
 import com.example.thuctapxuong.entity.PlayerInfo;
 import com.example.thuctapxuong.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,12 @@ public class UserRestController {
     UserDao userDao;
     @Autowired
     PlayerInfoDao playerInfoDao;
+    @Autowired
+    BoughtCharDao boughtCharDao;
+    @Autowired
+    CharacterDao characterDao;
+    @Autowired
+    AchievementDao achievementDao;
 
     @GetMapping("/{username}")
     public ResponseEntity<User> getUser(@PathVariable String username) {
@@ -52,6 +57,14 @@ public class UserRestController {
             PlayerInfo playerInfo = new PlayerInfo();
             playerInfo.setUser(user);
             playerInfoDao.save(playerInfo);
+            Achievement achievement = new Achievement();
+            achievement.setPlayerInfo(playerInfo);
+            achievementDao.save(achievement);
+            BoughtChar boughtChar = new BoughtChar();
+            boughtChar.setPlayer_info(playerInfo);
+            boughtChar.setCharBuy(characterDao.findById(1).get());
+            boughtChar.setIsSelected(true);
+            boughtCharDao.save(boughtChar);
             return ResponseEntity.ok(user);
         }
         else {

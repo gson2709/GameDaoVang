@@ -22,7 +22,7 @@ public class PlayerInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer highestScore = 500;
+    private Integer highestScore = 0;
     private Integer numberOfTurns = 6;
     private Integer currentTurns = 6;
     private LocalDateTime timeUsedTurn;
