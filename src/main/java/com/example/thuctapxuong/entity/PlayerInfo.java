@@ -22,7 +22,7 @@ public class PlayerInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer highestScore = 0;
+    private Integer highestScore = 500;
     private Integer numberOfTurns = 6;
     private Integer currentTurns = 6;
     private LocalDateTime timeUsedTurn;
@@ -32,11 +32,12 @@ public class PlayerInfo {
     @OneToMany(mappedBy = "playerInfo", fetch = FetchType.EAGER)
     private List<Achievement> achievements;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "player_info", fetch = FetchType.EAGER)
+    private List<BoughtChar> boughtChars;
+
     @ManyToOne
     @JoinColumn(name = "username")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "characterId")
-    private Character character;
 }

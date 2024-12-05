@@ -40,6 +40,18 @@ public class PlayerInfoRestController {
         }
     }
 
+    @PutMapping("/updateInfor/{id}")
+    public ResponseEntity<PlayerInfo> updateInfo(@PathVariable int id, @RequestBody PlayerInfo playerInfo) {
+        if (playerInfoDao.existsById(id)) {
+//            PlayerInfo curPlayerInfo = playerInfoDao.findById(id).get();
+//            curPlayerInfo.setHighestScore(playerInfo.getHighestScore() + playerInfo.getHighestScore());
+            return ResponseEntity.ok(playerInfoDao.save(playerInfo));
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PutMapping("/updateTurns/{id}-isPlayed={isPlayed}")
     public ResponseEntity<PlayerInfo> updateTurns(@PathVariable int id, @PathVariable boolean isPlayed) {
         if (playerInfoDao.findById(id) != null) {

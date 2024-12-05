@@ -1,27 +1,27 @@
 package com.example.thuctapxuong.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@Entity @Table(name = "characters")
+@Entity @Table(name = "bought_chars")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-public class Character {
+public class BoughtChar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private Double coins;
-    private String image;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "charBuy")
-    private List<BoughtChar> boughtChars;
+    @ManyToOne
+    @JoinColumn(name = "playerinfoId")
+    private PlayerInfo player_info;
+
+    @ManyToOne
+    @JoinColumn(name = "charId")
+    private Character charBuy;
+
+    private Boolean isSelected = false;
 }
