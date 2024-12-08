@@ -62,7 +62,7 @@ public class UserRestController {
             achievementDao.save(achievement);
             BoughtChar boughtChar = new BoughtChar();
             boughtChar.setPlayer_info(playerInfo);
-            boughtChar.setCharBuy(characterDao.findById(1).get());
+            boughtChar.setCharBuy(characterDao.findById(5).get());
             boughtChar.setIsSelected(true);
             boughtCharDao.save(boughtChar);
             return ResponseEntity.ok(user);

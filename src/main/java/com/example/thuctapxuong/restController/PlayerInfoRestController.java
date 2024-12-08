@@ -60,23 +60,24 @@ public class PlayerInfoRestController {
                 if (playerInfo.getCurrentTurns() > 0) {
                     currentTurns = playerInfo.getCurrentTurns();
                     playerInfo.setCurrentTurns(currentTurns - 1);
+                }
+                else {
                     playerInfo.setTimeUsedTurn(LocalDateTime.now());
                     playerInfo.setTimeAddTurn(playerInfo.getTimeUsedTurn().plusHours(1));
                 }
             }
             else
-                if (playerInfo.getCurrentTurns() < playerInfo.getNumberOfTurns()) {
+                if (playerInfo.getCurrentTurns() == 0) {
                     System.out.println(playerInfo.getTimeAddTurn() + " " + LocalDateTime.now());
                     if (LocalDateTime.now().compareTo(playerInfo.getTimeAddTurn()) >= 0) {
                         currentTurns = playerInfo.getCurrentTurns();
-                        playerInfo.setCurrentTurns(currentTurns + 1);
-                        playerInfo.setTimeUsedTurn(playerInfo.getTimeAddTurn());
+                        playerInfo.setCurrentTurns(currentTurns + 6);
                     }
                     else if (playerInfo.getTimeUsedTurn() == null) {
                         playerInfo.setTimeUsedTurn(LocalDateTime.now());
+                        playerInfo.setTimeAddTurn(playerInfo.getTimeUsedTurn().plusHours(1));
                         System.out.println("Auto create date");
                     }
-                    playerInfo.setTimeAddTurn(playerInfo.getTimeUsedTurn().plusHours(1));
                     System.out.println("Updated");
                 }
             return ResponseEntity.ok(playerInfoDao.save(playerInfo));
